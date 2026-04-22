@@ -17,29 +17,29 @@ Make sure to fulfill the following prerequisites:
 ## Download and Configuration
 ### Download
 Use the abapGit plug-in to import the <em>ABAP Platform Examples for Analytical Data Modeling</em> by executing the following steps:
-1. In your ABAP cloud project, create the ABAP package `/DMO/ANA_FLIGHT` (using the superpackage `/DMO/SAP`) as the target package for the demo content to be downloaded (leave the suggested values unchanged when following the steps in the package creation wizard).
+1. In your ABAP cloud project, create the ABAP package `ZNER_ANA_FLIGHT` (using the superpackage `ZNER_SAP`) as the target package for the demo content to be downloaded (leave the suggested values unchanged when following the steps in the package creation wizard).
 2. To add the <em>abapGit Repositories</em> view to the <em>ABAP</em> perspective, click `Window` > `Show View` > `Other...` from the menu bar and choose `abapGit Repositories`.
 3. In the <em>abapGit Repositories</em> view, click the `+` icon to clone an abapGit repository.
 4. Enter the following URL of this repository: `https://github.com/SAP-samples/abap-platform-analytics-data-modeling.git` and choose <em>Next</em>.
-5. Enter the newly created package `/DMO/ANA_FLIGHT` as the target package and choose <em>Next</em>.
+5. Enter the newly created package `ZNER_ANA_FLIGHT` as the target package and choose <em>Next</em>.
 6. Create a new transport request that you only use for this demo content installation (recommendation) and choose <em>Finish</em> to link the Git repository to your ABAP cloud project. The repository appears in the abapGit Repositories View with status <em>Linked</em>.
 7. Right-click on the new ABAP repository and choose `pull` to start the cloning of the repository contents. Note that this procedure may take a few minutes. 
 8. Once the cloning has finished, the status is set to `Pulled Successfully`. (Refresh the `abapGit Repositories` view to see the progress of the import).
 9. Refresh the project tree.
 
-As a result of the installation procedure above, the ABAP system creates an inactive version of all artifacts of the demo content and adds the sub package `/DMO/ANA_FLIGHT_QUERY` to the target package that contains additional analytical queries that demonstrate various features of embedded analytics.
+As a result of the installation procedure above, the ABAP system creates an inactive version of all artifacts of the demo content and adds the sub package `ZNER_ANA_FLIGHT_QUERY` to the target package that contains additional analytical queries that demonstrate various features of embedded analytics.
 
-NOTE: The namespace /DMO/ is reserved for the demo content. Apart from the downloaded demo content, do not use the namespace /DMO/ and do not create any development objects in the downloaded packages. You can access the development objects in /DMO/ from your own namespace.
+NOTE: The namespace ZNER_ is reserved for the demo content. Apart from the downloaded demo content, do not use the namespace ZNER_ and do not create any development objects in the downloaded packages. You can access the development objects in ZNER_ from your own namespace.
 
 ### Activation
-To activate all development objects from the `/DMO/ANA_FLIGHT` package: 
+To activate all development objects from the `ZNER_ANA_FLIGHT` package: 
 1. Click the mass-activation icon (<em>Activate Inactive ABAP Development Objects</em>) in the toolbar.  
 2. In the dialog that appears, select all development objects in the transport request (that you created for the demo content installation) and choose `Activate`. (The activation may take a few minutes.)
 
 ### Data Generation
 To fill the demo database tables: 
-1. Expand the package structure in the Project Explorer `/DMO/FLIGHT_LEGACY` > `Source Code Library` > `Classes`.
-2. Open the data generator class `/DMO/CL_FLIGHT_DATA_GENERATOR` and go to `lcl_flight_data_generator`.
+1. Expand the package structure in the Project Explorer `ZNER_FLIGHT_LEGACY` > `Source Code Library` > `Classes`.
+2. Open the data generator class `ZNER_CL_FLIGHT_DATA_GENERATOR` and go to `lcl_flight_data_generator`.
 3. Find the METHOD `build_connection_recurrency` and change the variable `lv_days_between` to use the constant `cv_days_between_4weeks`. This will make sure the generated data better suits the analytical examples.<br>
 The resulting code should now look like this: `DATA(lv_days_between) = cv_days_between_4weeks.`
 6. Mass-activate.
@@ -62,8 +62,8 @@ NOTE: Some queries do have fixed dates for the currency conversion in the demo c
 
 ## Test the ABAP Platform Examples
 1. Make sure all development objects are fully activated.
-2. Open `/DMO/ANA_C_AirportCapaQry` in ADT.
-3. Right-click `/DMO/ANA_C_AirportCapaQry` and choose `Open With` -> `Data Preview`.
+2. Open `ZNER_ANA_C_AirportCapaQry` in ADT.
+3. Right-click `ZNER_ANA_C_AirportCapaQry` and choose `Open With` -> `Data Preview`.
 4. A browser window should open that displays a multi-dimensional dat preview of the analytical query.
 
 <!--  ## Known Issues
