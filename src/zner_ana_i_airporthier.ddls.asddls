@@ -6,7 +6,7 @@
 @EndUserText.label: 'Airport Hierarchy'
 define hierarchy ZNER_ANA_I_AirportHier
   with parameters
-    p_HierarchyID : /dmo/ana_airport_hieid
+    p_HierarchyID : zner_ana_airport_hieid
   as parent child hierarchy(
     source ZNER_ANA_P_AirportHierBase
     child to parent association _Parent

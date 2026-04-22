@@ -13,7 +13,7 @@ The hierarchy specified by the association _DepartureAirportHier is used two tim
 define transient view entity ZNER_ANA_C_PAR_HIERNODE
   provider contract analytical_query
   with parameters
-    P_HierarchyID : /dmo/ana_airport_hieid,
+    P_HierarchyID : zner_ana_airport_hieid,
     
     @AnalyticsDetails.variable: {
       // with this annotation the parameter is a hierarchy node variable at runtime
@@ -24,7 +24,7 @@ define transient view entity ZNER_ANA_C_PAR_HIERNODE
       // a hierarchy node variable needs a reference to a hierarchy instance
       hierarchyAssociation: '_DepartureAirportHier'
     }    
-    P_DepartureAirportHierNode : /dmo/airport_from_id
+    P_DepartureAirportHierNode : zner_airport_from_id
 
   as projection on ZNER_ANA_I_FlightCube
   

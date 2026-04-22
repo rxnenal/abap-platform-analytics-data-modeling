@@ -12,13 +12,13 @@ such that the label reflects the input for the variables
 define transient view entity ZNER_ANA_C_PAR_Multi
   provider contract analytical_query
   with parameters
-    P_HierarchyID : /dmo/ana_airport_hieid,
+    P_HierarchyID : zner_ana_airport_hieid,
     @AnalyticsDetails.variable: {
       selectionType: #HIERARCHY_NODE,
       referenceElement: 'DepartureAirportID',
       hierarchyAssociation: '_DepartureAirportHier'
    }    
-    P_DepartureAirportHierNode : /dmo/airport_from_id,
+    P_DepartureAirportHierNode : zner_airport_from_id,
 
     P_TargetCurrency : abap.cuky,
     
@@ -28,7 +28,7 @@ define transient view entity ZNER_ANA_C_PAR_Multi
     P_FlightYear : calendaryear,
    
     @AnalyticsDetails.variable.mandatory: false
-    P_PlaneType : /dmo/plane_type_id,
+    P_PlaneType : zner_plane_type_id,
      
     @EndUserText.label: 'Increase %'
     P_Simulation : abap.int4

@@ -14,7 +14,7 @@ define transient view entity ZNER_ANA_C_PAR_DERIVATION_1
   provider contract analytical_query
   with parameters
     @AnalyticsDetails.variable.defaultValue: '20240909'
-    P_FlightDate : /dmo/flight_date,
+    P_FlightDate : zner_flight_date,
     @Consumption.derivation: {
       lookupEntity: 'I_CalendarDate',
       resultElement: 'FirstDayOfMonthDate',
@@ -23,7 +23,7 @@ define transient view entity ZNER_ANA_C_PAR_DERIVATION_1
       ]  
     }
     @EndUserText.label: 'First Day'
-    P_FirstDayOfMonth : /dmo/flight_date
+    P_FirstDayOfMonth : zner_flight_date
 
   as projection on ZNER_ANA_I_FlightCube
 {  

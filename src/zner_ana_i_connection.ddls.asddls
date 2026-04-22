@@ -8,7 +8,7 @@
   modelingPattern: #ANALYTICAL_DIMENSION
 }
 define view entity ZNER_ANA_I_Connection
-  as select from /dmo/connection as Connection
+  as select from zner_connection as Connection
 
   association [1..1] to ZNER_ANA_I_Carrier as _Carrier            on _Carrier.AirlineID = $projection.AirlineID
   association [1..1] to ZNER_ANA_I_Airport as _DepartureAirport   on _DepartureAirport.AirportID = $projection.DepartureAirportID

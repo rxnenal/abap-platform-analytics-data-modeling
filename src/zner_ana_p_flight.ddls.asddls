@@ -2,7 +2,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Preparation View for FlightCube'
 define view ZNER_ANA_P_Flight
-  as select from /dmo/flight
+  as select from zner_flight
 {
   key carrier_id,
   key connection_id,

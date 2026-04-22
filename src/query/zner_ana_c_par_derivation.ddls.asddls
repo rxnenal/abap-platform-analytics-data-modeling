@@ -13,7 +13,7 @@ define transient view entity ZNER_ANA_C_PAR_DERIVATION
     // static default value
     // Note that you can also use @Environment.systemField: #USER_DATE instead of a fixed date
     @AnalyticsDetails.variable.defaultValue: '20240909'
-    P_FlightDate : /dmo/flight_date,
+    P_FlightDate : zner_flight_date,
     // dynamic default value: derived by selecting from field FirstDayOfMonthDate from I_CalendarDate
     // with a WHERE clause derived from binding
     // in this case the derivation selects the first day of the month the value of 
@@ -29,7 +29,7 @@ define transient view entity ZNER_ANA_C_PAR_DERIVATION
     // the derivation is performed after the use changes the value of parameter P_FlightDate
     @Consumption.hidden: true
     @EndUserText.label: 'First Day'
-    P_FirstDayOfMonth : /dmo/flight_date
+    P_FirstDayOfMonth : zner_flight_date
 
   as projection on ZNER_ANA_I_FlightCube
 {  

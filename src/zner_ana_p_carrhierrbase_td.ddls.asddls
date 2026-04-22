@@ -1,7 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_ALLOWED
 @EndUserText.label: 'Base View for Carrier Hier'
 define view entity ZNER_ANA_P_CARRHIERRBASE_TD
-  as select from /dmo/ana_cr_t_h
+  as select from zner_ana_cr_t_h
 
   association [0..1] to ZNER_ANA_I_CARRIERHIERDIR_TD  as _Dir     on  _Dir.HierarchyID = $projection.HierarchyID
                                                                   and _Dir.DateTo      = $projection.DateTo

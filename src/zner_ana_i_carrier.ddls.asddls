@@ -9,7 +9,7 @@
 }
 @Consumption.valueHelpDefinition: [ { entity.name: 'ZNER_I_Carrier_StdVH'  } ]
 define view entity ZNER_ANA_I_Carrier
-  as select from /dmo/carrier
+  as select from zner_carrier
   
   association [*] to ZNER_ANA_I_CarrierHier    as _hier_std on _hier_std.AirlineID = $projection.AirlineID
   association [*] to ZNER_ANA_I_CARRIERHIER_TD as _hier_dtd on _hier_dtd.AirlineID = $projection.AirlineID

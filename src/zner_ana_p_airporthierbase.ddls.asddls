@@ -2,7 +2,7 @@
 @EndUserText.label: 'Base View for Airport Hierarchy'
 
 define view entity ZNER_ANA_P_AirportHierBase
-  as select from /dmo/ana_ap_h
+  as select from zner_ana_ap_h
 
   association [0..1] to ZNER_ANA_I_Airport         as _Airport on  _Airport.AirportID = $projection.AirportID
 

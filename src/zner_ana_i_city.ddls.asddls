@@ -8,7 +8,7 @@
 }
 
 define view entity ZNER_ANA_I_City
-  as select from /dmo/ana_city
+  as select from zner_ana_city
   association [1..1] to I_Country as _Country on _Country.Country = $projection.country
 {
       @ObjectModel.foreignKey.association: '_Country'

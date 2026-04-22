@@ -8,7 +8,7 @@
   modelingPattern: #ANALYTICAL_DIMENSION
 }
 define view entity ZNER_ANA_I_Airport
-  as select from /dmo/airport
+  as select from zner_airport
 
   association [0..1] to I_Country              as _Country on  _Country.Country = $projection.Country
 

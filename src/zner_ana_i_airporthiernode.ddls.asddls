@@ -6,7 +6,7 @@
   supportedCapabilities: [ #ANALYTICAL_DIMENSION ],
   modelingPattern: #ANALYTICAL_DIMENSION
 }
-define view entity ZNER_ANA_I_AirportHierNode as select from /dmo/ana_ap_hn
+define view entity ZNER_ANA_I_AirportHierNode as select from zner_ana_ap_hn
   association to ZNER_ANA_I_AirportHierDir as _Dir on _Dir.HierarchyID = $projection.HierarchyID
 {
        @ObjectModel.foreignKey.association: '_Dir'

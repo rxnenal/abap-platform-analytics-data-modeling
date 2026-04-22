@@ -17,7 +17,7 @@ define transient view entity ZNER_ANA_C_PAR_Valuehelp
         } 
       }
     ]
-    P_PlaneType : /dmo/plane_type_id
+    P_PlaneType : zner_plane_type_id
   as projection on ZNER_ANA_I_FlightCube
 {
   @AnalyticsDetails.query.axis: #ROWS

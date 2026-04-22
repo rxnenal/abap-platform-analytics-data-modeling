@@ -7,7 +7,7 @@
 @EndUserText.label: 'Planetype (simple ValueHelp)'
 
 define view entity ZNER_ANA_C_PLANETYPE_VH 
-as select from /dmo/flight
+as select from zner_flight
 {
   plane_type_id as PlaneType
 }

@@ -11,12 +11,12 @@ underlying analytical model (cube view).
 define transient view entity ZNER_ANA_C_PAR_1
 provider contract analytical_query
   with parameters
-    P_Airline : /dmo/carrier_id,
+    P_Airline : zner_carrier_id,
     // By default parameters become prompts with mandatory input
     // With this annotation the prompt becomes optional and user
     // needs not to enter a value for the prompt. 
     @AnalyticsDetails.variable.mandatory: false
-    p_Planetype : /dmo/plane_type_id
+    p_Planetype : zner_plane_type_id
 as projection on ZNER_ANA_I_FlightCube {
   @AnalyticsDetails.query.axis: #ROWS
   AirlineID,

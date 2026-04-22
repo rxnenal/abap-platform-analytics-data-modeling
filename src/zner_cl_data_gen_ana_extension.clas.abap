@@ -1,4 +1,4 @@
-CLASS /dmo/cl_data_gen_ana_extension DEFINITION
+CLASS zner_cl_data_gen_ana_extension DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -6,7 +6,7 @@ CLASS /dmo/cl_data_gen_ana_extension DEFINITION
   PUBLIC SECTION.
 
     INTERFACES if_badi_interface .
-    INTERFACES /dmo/if_data_generation_badi .
+    INTERFACES zner_if_data_generation_badi .
     INTERFACES if_oo_adt_classrun.
 
     METHODS:
@@ -18,7 +18,7 @@ CLASS /dmo/cl_data_gen_ana_extension DEFINITION
   PRIVATE SECTION.
     TYPES:
       BEGIN OF pt_s_city,
-        city    TYPE /dmo/city,       " city
+        city    TYPE zner_city,       " city
         country TYPE land1, " country
         lat_deg TYPE c LENGTH 3,           " langitude degrees
         lat_min TYPE c LENGTH 2,           " langitude minutes
@@ -29,16 +29,16 @@ CLASS /dmo/cl_data_gen_ana_extension DEFINITION
       END OF pt_s_city,
       pt_ts_city             TYPE STANDARD TABLE OF pt_s_city,
 
-      pt_s_dmo_city          TYPE /dmo/ana_city,
+      pt_s_dmo_city          TYPE zner_ana_city,
       pt_ts_dmo_city         TYPE SORTED TABLE OF pt_s_dmo_city WITH UNIQUE KEY city country,
 
-      pt_s_airport_hier      TYPE /dmo/ana_ap_h,
+      pt_s_airport_hier      TYPE zner_ana_ap_h,
       pt_t_airport_hier      TYPE STANDARD TABLE OF pt_s_airport_hier WITH NON-UNIQUE KEY table_line,
 
-      pt_s_airport_hier_node TYPE /dmo/ana_ap_hn,
+      pt_s_airport_hier_node TYPE zner_ana_ap_hn,
       pt_t_airport_hier_node TYPE STANDARD TABLE OF pt_s_airport_hier_node WITH NON-UNIQUE KEY table_line,
 
-      pt_s_airport_hier_dir  TYPE /dmo/ana_ap_hd,
+      pt_s_airport_hier_dir  TYPE zner_ana_ap_hd,
       pt_t_airport_hier_dir  TYPE STANDARD TABLE OF pt_s_airport_hier_dir WITH NON-UNIQUE KEY table_line.
 
     DATA: p_r_log TYPE REF TO lcl_text_output.
@@ -51,42 +51,42 @@ CLASS /dmo/cl_data_gen_ana_extension DEFINITION
         IMPORTING i_ts_city TYPE pt_ts_dmo_city,
 
       fill_airport_hier
-        IMPORTING i_hieid TYPE /dmo/ana_airport_hieid,
+        IMPORTING i_hieid TYPE zner_ana_airport_hieid,
 
       fill_airline_hier
-        IMPORTING i_hieid TYPE /dmo/ana_carrier_hieid,
+        IMPORTING i_hieid TYPE zner_ana_carrier_hieid,
 
       generate_geo_hier_data
-        IMPORTING i_hieid  TYPE /dmo/ana_airport_hieid
+        IMPORTING i_hieid  TYPE zner_ana_airport_hieid
         EXPORTING e_t_hier TYPE pt_t_airport_hier
                   e_t_node TYPE pt_t_airport_hier_node
                   e_t_dir  TYPE pt_t_airport_hier_dir,
 
       generate_abc_hier_data
-        IMPORTING i_hieid  TYPE /dmo/ana_airport_hieid
+        IMPORTING i_hieid  TYPE zner_ana_airport_hieid
         EXPORTING e_t_hier TYPE pt_t_airport_hier
                   e_t_node TYPE pt_t_airport_hier_node
                   e_t_dir  TYPE pt_t_airport_hier_dir,
 
       get_continent
         IMPORTING i_country          TYPE land1
-        RETURNING VALUE(r_continent) TYPE /dmo/ana_text,
+        RETURNING VALUE(r_continent) TYPE zner_ana_text,
 
       get_nodetext
-        IMPORTING i_nodename        TYPE /dmo/ana_nodename
-        RETURNING VALUE(r_nodetext) TYPE /dmo/ana_text.
+        IMPORTING i_nodename        TYPE zner_ana_nodename
+        RETURNING VALUE(r_nodetext) TYPE zner_ana_text.
 
 ENDCLASS.
 
 
 
-CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
+CLASS zner_cl_data_gen_ana_extension IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
     ana_data_generation( out ).
   ENDMETHOD.
 
-  METHOD /dmo/if_data_generation_badi~data_generation.
+  METHOD zner_if_data_generation_badi~data_generation.
     ana_data_generation( out ).
   ENDMETHOD.
 
@@ -111,7 +111,7 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
     p_r_log->print_title( 'City (Analytics)' ) ##NO_TEXT.
 
     p_r_log->print_delete( ).
-    DELETE FROM /dmo/ana_city.                          "#EC CI_NOWHERE
+    DELETE FROM zner_ana_city.                          "#EC CI_NOWHERE
 
     p_r_log->print_build( ).
     l_ts_city = generate_city_data( ).
@@ -207,10 +207,10 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
 *               and the second coordinate is latitude with bounds -90 to 90.
 
     " geo-field still initial
-    INSERT /dmo/ana_city FROM TABLE @i_ts_city.
+    INSERT zner_ana_city FROM TABLE @i_ts_city.
 
     " fill geo-field with the help of DB-function
-    UPDATE /dmo/ana_city SET geopoint = st_transform( st_new_point( longitude , latitude, 4326 ) , 3857 ) . "#EC CI_NOWHERE
+    UPDATE zner_ana_city SET geopoint = st_transform( st_new_point( longitude , latitude, 4326 ) , 3857 ) . "#EC CI_NOWHERE
 
   ENDMETHOD.
 
@@ -224,9 +224,9 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
     p_r_log->print_title( |Airport { i_hieid } hierarchy (Analytics)| ) ##NO_TEXT.
 
     p_r_log->print_delete( ).
-    DELETE FROM /dmo/ana_ap_h  WHERE hierarchy_id = @i_hieid.
-    DELETE FROM /dmo/ana_ap_hn WHERE hierarchy_id = @i_hieid.
-    DELETE FROM /dmo/ana_ap_hd WHERE hierarchy_id = @i_hieid.
+    DELETE FROM zner_ana_ap_h  WHERE hierarchy_id = @i_hieid.
+    DELETE FROM zner_ana_ap_hn WHERE hierarchy_id = @i_hieid.
+    DELETE FROM zner_ana_ap_hd WHERE hierarchy_id = @i_hieid.
 
     p_r_log->print_build( ).
     CASE i_hieid.
@@ -247,9 +247,9 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
     ENDCASE.
 
     p_r_log->print_insert( ).
-    INSERT /dmo/ana_ap_h  FROM TABLE @l_t_hier.
-    INSERT /dmo/ana_ap_hn FROM TABLE @l_t_hier_node.
-    INSERT /dmo/ana_ap_hd FROM TABLE @l_t_hier_dir.
+    INSERT zner_ana_ap_h  FROM TABLE @l_t_hier.
+    INSERT zner_ana_ap_hn FROM TABLE @l_t_hier_node.
+    INSERT zner_ana_ap_hd FROM TABLE @l_t_hier_dir.
 
 
     p_r_log->print_done( ).
@@ -259,16 +259,16 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
 
   METHOD generate_geo_hier_data.
 
-    CONSTANTS: c_nodeid_world TYPE /dmo/ana_airport_nodeid VALUE '00001'.
+    CONSTANTS: c_nodeid_world TYPE zner_ana_airport_nodeid VALUE '00001'.
 
     DATA: l_s_hier          TYPE pt_s_airport_hier,
           l_s_node          TYPE pt_s_airport_hier_node,
-          l_t_airport       TYPE STANDARD TABLE OF /dmo/airport,
-          l_nodetext        TYPE /dmo/ana_text,
-          l_node_id         TYPE /dmo/ana_airport_nodeid,
+          l_t_airport       TYPE STANDARD TABLE OF zner_airport,
+          l_nodetext        TYPE zner_ana_text,
+          l_node_id         TYPE zner_ana_airport_nodeid,
           l_sequence_number TYPE i.
 
-    SELECT * FROM /dmo/airport INTO TABLE @l_t_airport. "#EC CI_NOWHERE
+    SELECT * FROM zner_airport INTO TABLE @l_t_airport. "#EC CI_NOWHERE
 
     APPEND VALUE #( hierarchy_id = i_hieid
                     nodename     = 'WORLD'
@@ -360,19 +360,19 @@ CLASS /dmo/cl_data_gen_ana_extension IMPLEMENTATION.
 
 
   METHOD generate_abc_hier_data.
-    CONSTANTS: c_nodeid_all TYPE /dmo/ana_airport_nodeid VALUE '00001'.
+    CONSTANTS: c_nodeid_all TYPE zner_ana_airport_nodeid VALUE '00001'.
 
     DATA: l_s_hier          TYPE pt_s_airport_hier,
           l_s_node          TYPE pt_s_airport_hier_node,
-          l_t_airport       TYPE STANDARD TABLE OF /dmo/airport,
-          l_nodename        TYPE /dmo/ana_nodename,
-          l_nodename_p      TYPE /dmo/ana_nodename,
-          l_nodetext        TYPE /dmo/ana_text,
-          l_node_id         TYPE /dmo/ana_airport_nodeid,
+          l_t_airport       TYPE STANDARD TABLE OF zner_airport,
+          l_nodename        TYPE zner_ana_nodename,
+          l_nodename_p      TYPE zner_ana_nodename,
+          l_nodetext        TYPE zner_ana_text,
+          l_node_id         TYPE zner_ana_airport_nodeid,
           l_sequence_number TYPE i.
 
     " select all fields / performance is not issue here
-    SELECT * FROM /dmo/airport
+    SELECT * FROM zner_airport
       ORDER BY airport_id
       INTO TABLE @l_t_airport. "#EC CI_ALL_FIELDS_NEEDED #EC CI_NOWHERE
 

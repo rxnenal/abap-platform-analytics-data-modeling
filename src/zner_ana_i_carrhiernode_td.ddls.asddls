@@ -7,7 +7,7 @@
   modelingPattern: #ANALYTICAL_DIMENSION
 }
 define view entity ZNER_ANA_I_CARRHIERNODE_TD 
-as select from /dmo/ana_cr_t_hn
+as select from zner_ana_cr_t_hn
   association to ZNER_ANA_I_CARRIERHIERDIR_TD as _Dir on  _Dir.HierarchyID = $projection.HierarchyID
                                                       and _Dir.DateTo      = $projection.DateTo
 {

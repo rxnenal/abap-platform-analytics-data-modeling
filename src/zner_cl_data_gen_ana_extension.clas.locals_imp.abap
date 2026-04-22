@@ -69,7 +69,7 @@ CLASS lcl_airline_hier IMPLEMENTATION.
     DATA: l_invl_length TYPE i.
 
     SELECT MIN( flight_date ), MAX( flight_date )
-      FROM /dmo/ana_p_flight
+      FROM zner_ana_p_flight
       INTO (@p_min_date, @p_max_date ).
 
     l_invl_length = ( p_max_date - p_min_date )  DIV 3 .
@@ -77,34 +77,34 @@ CLASS lcl_airline_hier IMPLEMENTATION.
     p_i1_date = p_min_date + l_invl_length.
     p_i2_date = p_i1_date  + l_invl_length.
 
-    SELECT currency_code FROM /dmo/carrier GROUP BY currency_code INTO TABLE @p_ts_curr.
+    SELECT currency_code FROM zner_carrier GROUP BY currency_code INTO TABLE @p_ts_curr.
 
   ENDMETHOD.
 
   METHOD delete_data_from_db.
-    DELETE FROM /dmo/ana_cr_s_h  WHERE hierarchy_id = @p_hieid.
-    DELETE FROM /dmo/ana_cr_s_hd WHERE hierarchy_id = @p_hieid.
+    DELETE FROM zner_ana_cr_s_h  WHERE hierarchy_id = @p_hieid.
+    DELETE FROM zner_ana_cr_s_hd WHERE hierarchy_id = @p_hieid.
 
-    DELETE FROM /dmo/ana_cr_t_h  WHERE hierarchy_id = @p_hieid.
-    DELETE FROM /dmo/ana_cr_t_hd WHERE hierarchy_id = @p_hieid.
-    DELETE FROM /dmo/ana_cr_t_hn WHERE hierarchy_id = @p_hieid.
+    DELETE FROM zner_ana_cr_t_h  WHERE hierarchy_id = @p_hieid.
+    DELETE FROM zner_ana_cr_t_hd WHERE hierarchy_id = @p_hieid.
+    DELETE FROM zner_ana_cr_t_hn WHERE hierarchy_id = @p_hieid.
   ENDMETHOD.
 
   METHOD save_data_on_db.
-    INSERT /dmo/ana_cr_s_h  FROM TABLE @p_t_data_hier.
-    INSERT /dmo/ana_cr_s_hd FROM TABLE @p_t_data_dir.
+    INSERT zner_ana_cr_s_h  FROM TABLE @p_t_data_hier.
+    INSERT zner_ana_cr_s_hd FROM TABLE @p_t_data_dir.
 
-    INSERT /dmo/ana_cr_t_hn FROM TABLE @p_t_data_td_node.
+    INSERT zner_ana_cr_t_hn FROM TABLE @p_t_data_td_node.
 
-    INSERT /dmo/ana_cr_t_h  FROM TABLE @p_t_data_td_hier.
-    INSERT /dmo/ana_cr_t_hd FROM TABLE @p_t_data_td_dir.
+    INSERT zner_ana_cr_t_h  FROM TABLE @p_t_data_td_hier.
+    INSERT zner_ana_cr_t_hd FROM TABLE @p_t_data_td_dir.
   ENDMETHOD.
 
   METHOD get_parent_id.
 
     DATA: l_index      TYPE i,
           l_index_n    TYPE n LENGTH 2,
-          l_parentname TYPE /dmo/ana_nodename.
+          l_parentname TYPE zner_ana_nodename.
     FIELD-SYMBOLS:
           <l_s_nodeid> TYPE pt_s_nodeid.
     CLEAR e_t_parent.
@@ -172,17 +172,17 @@ CLASS lcl_airline_hier IMPLEMENTATION.
 
   METHOD generate_carrier_hier_data.
 
-    CONSTANTS: c_nodeid_world TYPE /dmo/ana_airport_nodeid VALUE '00001'.
+    CONSTANTS: c_nodeid_world TYPE zner_ana_airport_nodeid VALUE '00001'.
 
     DATA: l_s_hier          TYPE pt_s_carrier_hier,
           l_s_node          TYPE pt_s_carrier_hier_td_node,
           l_t_data_node     type pt_t_carrier_hier_td_node,
-          l_t_carrier       TYPE STANDARD TABLE OF /dmo/carrier,
-          l_nodetext        TYPE /dmo/ana_text,
-          l_node_id         TYPE /dmo/ana_carrier_nodeid,
+          l_t_carrier       TYPE STANDARD TABLE OF zner_carrier,
+          l_nodetext        TYPE zner_ana_text,
+          l_node_id         TYPE zner_ana_carrier_nodeid,
           l_sequence_number TYPE i,
           l_t_super_node    TYPE pt_t_carrier_hier_td_node,
-          l_parent_id       TYPE /dmo/ana_carrier_nodeid,
+          l_parent_id       TYPE zner_ana_carrier_nodeid,
           l_date_from       TYPE d,
           l_date_to         TYPE d,
           l_t_parent        TYPE pt_t_parent.
@@ -264,7 +264,7 @@ CLASS lcl_airline_hier IMPLEMENTATION.
     set_node_data( l_t_data_node ).
 
 * add leaves
-    SELECT * FROM /dmo/carrier INTO TABLE @l_t_carrier. "#EC CI_NOWHERE
+    SELECT * FROM zner_carrier INTO TABLE @l_t_carrier. "#EC CI_NOWHERE
 
     LOOP AT l_t_carrier ASSIGNING FIELD-SYMBOL(<l_s_carrier>).
 
@@ -297,8 +297,8 @@ CLASS lcl_airline_hier IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD generate_carrier_hier_td_data.
-    DATA: l_datefrom TYPE /dmo/ana_date_from,
-          l_dateto   TYPE /dmo/ana_date_to.
+    DATA: l_datefrom TYPE zner_ana_date_from,
+          l_dateto   TYPE zner_ana_date_to.
 
     DO 3 TIMES.
       CASE sy-index.
@@ -337,8 +337,8 @@ CLASS lcl_airline_hier IMPLEMENTATION.
   ENDMETHOD.
 
   method set_node_data.
-      DATA: l_datefrom       TYPE /dmo/ana_date_from,
-            l_dateto         TYPE /dmo/ana_date_to,
+      DATA: l_datefrom       TYPE zner_ana_date_from,
+            l_dateto         TYPE zner_ana_date_to,
             l_s_data_td_node TYPE pt_s_carrier_hier_td_node.
     " hierarchy node text (not time dependent - fill dateto, which belongs to hierarchy key, with dateto from directory)
     LOOP AT i_t_data_node ASSIGNING FIELD-SYMBOL(<l_s_data_node>).

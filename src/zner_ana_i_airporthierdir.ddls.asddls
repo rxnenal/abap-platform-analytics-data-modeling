@@ -7,7 +7,7 @@
   modelingPattern: #ANALYTICAL_DIMENSION
 }
 define view entity ZNER_ANA_I_AirportHierDir
-  as select from /dmo/ana_ap_hd
+  as select from zner_ana_ap_hd
 {
       @ObjectModel.text.element: [ 'Name' ]
   key hierarchy_id    as HierarchyID,

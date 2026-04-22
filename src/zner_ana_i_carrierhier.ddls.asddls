@@ -6,9 +6,9 @@
 @EndUserText.label: 'Carrier Hierarchy'
 define hierarchy ZNER_ANA_I_CarrierHier
   with parameters
-    p_HierarchyID : /dmo/ana_carrier_hieid,
-    p_DateFrom    : /dmo/ana_date_from,
-    p_Dateto      : /dmo/ana_date_to
+    p_HierarchyID : zner_ana_carrier_hieid,
+    p_DateFrom    : zner_ana_date_from,
+    p_Dateto      : zner_ana_date_to
   as parent child hierarchy(
     source ZNER_ANA_P_CarrierHierBase
     child to parent association _Parent

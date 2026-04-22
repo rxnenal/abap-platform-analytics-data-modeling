@@ -7,7 +7,7 @@
   modelingPattern: #ANALYTICAL_DIMENSION
 }
 define view entity ZNER_ANA_I_CARRIERHIERDIR_TD
-  as select from /dmo/ana_cr_t_hd
+  as select from zner_ana_cr_t_hd
 {
       @ObjectModel.text.element: [ 'Name' ]
   key hierarchy_id    as HierarchyID,

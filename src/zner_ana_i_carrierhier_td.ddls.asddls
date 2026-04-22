@@ -6,8 +6,8 @@
 @EndUserText.label: 'Carrier Hierarchy (tim-dep dir)'
 define hierarchy ZNER_ANA_I_CARRIERHIER_TD
   with parameters
-    p_HierarchyID : /dmo/ana_carrier_hieid,
-    p_Keydate     : /dmo/ana_date_to
+    p_HierarchyID : zner_ana_carrier_hieid,
+    p_Keydate     : zner_ana_date_to
   as parent child hierarchy(
     source ZNER_ANA_P_CARRHIERRBASE_TD
     child to parent association _Parent

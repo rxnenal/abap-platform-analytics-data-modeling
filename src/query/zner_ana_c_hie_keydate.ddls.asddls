@@ -12,7 +12,7 @@ provider contract analytical_query
 with parameters
   @EndUserText.label: 'Hierarchy Date'
   @Semantics.businessDate.at: true   
-  p_KeyDate : /dmo/ana_date_from
+  p_KeyDate : zner_ana_date_from
   
 as projection on ZNER_ANA_I_FlightCube
 {

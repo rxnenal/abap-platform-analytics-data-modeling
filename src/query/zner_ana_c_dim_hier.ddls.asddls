@@ -9,7 +9,7 @@ define transient view entity ZNER_ANA_C_DIM_HIER
 provider contract analytical_query
 with parameters
   @AnalyticsDetails.variable.mandatory: false
-  p_hierarchyID : /dmo/ana_airport_hieid
+  p_hierarchyID : zner_ana_airport_hieid
 as projection on ZNER_ANA_I_FlightCube
 { 
   // _DepartureAirport is from cube to airport dimension view 

@@ -40,7 +40,7 @@ CLASS lcl_airline_hier DEFINITION CREATE PRIVATE.
   PUBLIC SECTION.
 
     CLASS-METHODS:
-      get_instance IMPORTING i_hieid         TYPE /dmo/ana_carrier_hieid
+      get_instance IMPORTING i_hieid         TYPE zner_ana_carrier_hieid
                    RETURNING VALUE(r_result) TYPE REF TO lcl_airline_hier.
 
     methods:
@@ -52,30 +52,30 @@ CLASS lcl_airline_hier DEFINITION CREATE PRIVATE.
 
 
   PRIVATE SECTION.
-    CONSTANTS: c_nodename TYPE /dmo/ana_nodename VALUE 'ALLIANCE_'.
+    CONSTANTS: c_nodename TYPE zner_ana_nodename VALUE 'ALLIANCE_'.
     TYPES:
-      pt_t_carrier_hier      TYPE STANDARD TABLE OF /dmo/ana_cr_s_h,
-      pt_s_carrier_hier      TYPE /dmo/ana_cr_s_h,
-      pt_t_carrier_hier_dir  TYPE STANDARD TABLE OF /dmo/ana_cr_s_hd,
-      pt_s_carrier_hier_dir  TYPE /dmo/ana_cr_s_hd,
+      pt_t_carrier_hier      TYPE STANDARD TABLE OF zner_ana_cr_s_h,
+      pt_s_carrier_hier      TYPE zner_ana_cr_s_h,
+      pt_t_carrier_hier_dir  TYPE STANDARD TABLE OF zner_ana_cr_s_hd,
+      pt_s_carrier_hier_dir  TYPE zner_ana_cr_s_hd,
 
-      pt_t_carrier_hier_td      TYPE STANDARD TABLE OF /dmo/ana_cr_t_h,
-      pt_s_carrier_hier_td      TYPE /dmo/ana_cr_t_h,
-      pt_t_carrier_hier_td_node TYPE STANDARD TABLE OF /dmo/ana_cr_t_hn,
-      pt_s_carrier_hier_td_node TYPE /dmo/ana_cr_t_hn,
-      pt_t_carrier_hier_td_dir  TYPE STANDARD TABLE OF /dmo/ana_cr_t_hd,
-      pt_s_carrier_hier_td_dir  TYPE /dmo/ana_cr_t_hd,
+      pt_t_carrier_hier_td      TYPE STANDARD TABLE OF zner_ana_cr_t_h,
+      pt_s_carrier_hier_td      TYPE zner_ana_cr_t_h,
+      pt_t_carrier_hier_td_node TYPE STANDARD TABLE OF zner_ana_cr_t_hn,
+      pt_s_carrier_hier_td_node TYPE zner_ana_cr_t_hn,
+      pt_t_carrier_hier_td_dir  TYPE STANDARD TABLE OF zner_ana_cr_t_hd,
+      pt_s_carrier_hier_td_dir  TYPE zner_ana_cr_t_hd,
 
       BEGIN OF pt_s_nodeid,
-        nodename TYPE /dmo/ana_nodename,
-        datefrom TYPE /dmo/ana_date_from,
-        dateto   TYPE /dmo/ana_date_to,
-        node_id  TYPE /dmo/ana_carrier_nodeid,
+        nodename TYPE zner_ana_nodename,
+        datefrom TYPE zner_ana_date_from,
+        dateto   TYPE zner_ana_date_to,
+        node_id  TYPE zner_ana_carrier_nodeid,
       END OF pt_s_nodeid,
       BEGIN OF pt_s_parent,
-        parent_id TYPE /dmo/ana_carrier_nodeid,
-        datefrom  TYPE /dmo/ana_date_from,
-        dateto    TYPE /dmo/ana_date_to,
+        parent_id TYPE zner_ana_carrier_nodeid,
+        datefrom  TYPE zner_ana_date_from,
+        dateto    TYPE zner_ana_date_to,
       END OF pt_s_parent,
       pt_t_parent TYPE STANDARD TABLE OF pt_s_parent WITH NON-UNIQUE KEY table_line.
 
@@ -83,8 +83,8 @@ CLASS lcl_airline_hier DEFINITION CREATE PRIVATE.
           p_i1_date   TYPE d,
           p_i2_date   TYPE d,
           p_max_date  TYPE d,
-          p_hieid     TYPE /dmo/ana_carrier_hieid,
-          p_ts_curr   TYPE SORTED TABLE OF /dmo/currency_code WITH UNIQUE KEY table_line,
+          p_hieid     TYPE zner_ana_carrier_hieid,
+          p_ts_curr   TYPE SORTED TABLE OF zner_currency_code WITH UNIQUE KEY table_line,
           p_th_nodeid TYPE HASHED TABLE OF pt_s_nodeid WITH UNIQUE KEY nodename datefrom,
 
           p_t_data_hier TYPE pt_t_carrier_hier,
@@ -95,7 +95,7 @@ CLASS lcl_airline_hier DEFINITION CREATE PRIVATE.
           p_t_data_td_dir  TYPE pt_t_carrier_hier_td_dir.
 
     methods:
-      get_parent_id IMPORTING i_s_carrier TYPE /dmo/carrier
+      get_parent_id IMPORTING i_s_carrier TYPE zner_carrier
                     EXPORTING e_t_parent  TYPE pt_t_parent,
       get_text_with_time importing i_text type csequence
                                    i_datefrom type d
